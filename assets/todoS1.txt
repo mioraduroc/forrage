@@ -1,0 +1,56 @@
+- Formulaire de demande
+        - reference automatique
+        - nom demandeur
+        - lieu pour l'eventuel forrage
+                - région
+                - district
+                - commune
+
+
+
+- création des tables 
+        - client
+                - id
+                - nom
+                - contact
+                - adresse
+        - region
+                - id
+                - libelle
+        - district
+                - id
+                - libelle
+                - idRegion
+        - commune
+                - id
+                - libelle
+                - idDistrict
+        - demande
+                - id
+                - reference
+                - idClient
+                - lieu
+                - idCommune 
+        - statut
+                - id
+                - libelle
+        - statutDemande 
+                - id
+                - idDemande
+                - idStatut
+                - dateStatut
+
+                
+
+- CRUD pour demande
+- ny ambiny insertion directe 
+
+
+- date avec heures minutes secondes
+
+
+
+
+ETAPE 
+        - identification et caractéristique des entités
+        - traiter les caracterisy=tiques qui sont des entités

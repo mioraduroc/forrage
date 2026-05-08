@@ -1,0 +1,7 @@
+-interface insertion devis
+    - description
+    - prix unitaire 
+    - quantite 
+    - date creation devis
+    - date probable realisation 
+- devis pdf no mivoaka 

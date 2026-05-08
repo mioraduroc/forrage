@@ -1,0 +1,12 @@
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/model/Demande.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/model/StatutDemande.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/model/Statut.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/repository/CommuneRepository.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/repository/ClientRepository.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/model/Region.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/repository/DemandeRepository.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/service/DemandeService.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/model/Client.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/controller/DemandeController.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/model/Commune.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/model/District.java

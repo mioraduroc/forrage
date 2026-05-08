@@ -1,0 +1,38 @@
+<!-- DATA SOURCE -->
+<bean id="dataSource"
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/forage"/>
+    <property name="username" value="root"/>
+    <property name="password" value=""/>
+</bean>
+
+<!-- ENTITY MANAGER -->
+<bean id="entityManagerFactory"
+      class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+
+    <property name="dataSource" ref="dataSource"/>
+    <property name="packagesToScan" value="com.forage.model"/>
+
+    <property name="jpaVendorAdapter">
+        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+    </property>
+
+    <property name="jpaProperties">
+        <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+            <prop key="hibernate.show_sql">true</prop>
+            <prop key="hibernate.hbm2ddl.auto">update</prop>
+        </props>
+    </property>
+</bean>
+
+<!-- TRANSACTION -->
+<bean id="transactionManager"
+      class="org.springframework.orm.jpa.JpaTransactionManager">
+
+    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+</bean>
+
+<tx:annotation-driven/>
