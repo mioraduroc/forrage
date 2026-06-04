@@ -5,3 +5,35 @@
     - date creation devis
     - date probable realisation 
 - devis pdf no mivoaka 
+
+
+
+- devis izany misy roa 
+    - devis etude 
+    - devis forrage 
+
+- un devis est rattache a une demande 
+
+
+
+- corrige le probleme pour que le statut de la demande soit affiche dans la colonne statut pour la liste des demande 
+- finis la page devisFormulaire.html tel que 
+    - il y a une selection de demande parmis les demandes existantes
+    - apres avoir choisi une demande utilise javascript onblur pour prende les informations concernant la demande choisie en ajax puis retourner le resultat en json en l'affichant sur la page 
+    - il devra y avoir une input type devis qui sera selon la demande choisie mais  par defaut type = 1 qui est devis etude : si le sigle du statut de la demande choisie  est "DEC" le type de 
+      devis devra etre le type a l'id = 2 qui est devis de forage ( pour cela , verifie bien les script base.sql et data.sql )
+    - ensuite les input des details devis : ( description , quantite, prix unitaire ... ) montant devra etre calcule de facon leger avec javascript 
+
+    c'est comme cela que seront fait les insertions dans devis et detailDevis 
+    en consequence , si on vient de creer par exemple le devis de l'etude ou le devid de forrage d'une demande , il faut l'ecrire dans statutDemande
+
+
+
+- crée le statutModificationFormulaire.html 
+    - affichant liste des demandes 
+    - liste des statut disponibles pour la demande ( table statut ) 
+    - on choisis une demande , un statut , on met la date 
+    - c'est ce qui cause l'acceptation d'un devis d' etude ou d'un devis de forage d'une demande 
+
+
+n'oublie pas d'ajouter les bouton pour aller vers chaque page dans liste demande 

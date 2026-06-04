@@ -8,3 +8,7 @@ Projet forrage avec spring MVC
     | web.xml                | démarre Spring MVC        |
     | dispatcher-servlet.xml | MVC (controllers + views) |
     | applicationContext.xml | logique métier + DB       |
+
+
+
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modification statut demande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 760px;
+            margin: 40px auto;
+            padding: 0 16px;
+            background: #f7f7f7;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            display: grid;
+            gap: 16px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        button,
+        .link-btn {
+            width: fit-content;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .secondary {
+            background: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Modifier le statut d'une demande</h2>
+
+<div style="margin-bottom: 20px;">
+    <a class="link-btn secondary" th:href="@{/demande/liste}">Retour à la liste</a>
+</div>
+
+<form th:action="@{/demande/statut/save}" method="post">
+    <div>
+        <label for="idDemande">Demande :</label>
+        <select id="idDemande" name="idDemande" required>
+            <option value="">-- Choisir une demande --</option>
+            <option th:each="demande : ${demandes}"
+                    th:value="${demande.id}"
+                    th:text="${demande.reference + ' - ' + (demande.client != null ? demande.client.nom : '')}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="idStatut">Statut :</label>
+        <select id="idStatut" name="idStatut" required>
+            <option value="">-- Choisir un statut --</option>
+            <option th:each="statut : ${statutsDisponibles}"
+                    th:value="${statut.id}"
+                    th:text="${statut.sigle + ' - ' + statut.libelle}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="dateStatut">Date :</label>
+        <input id="dateStatut" name="dateStatut" type="datetime-local" required>
+    </div>
+
+    <button type="submit">Enregistrer le statut</button>
+</form>
+
+<script>
+    document.getElementById('dateStatut').value = new Date().toISOString().slice(0, 16);
+</script>
+
+</body>
+</html>

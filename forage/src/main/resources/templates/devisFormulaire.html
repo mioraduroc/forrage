@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de devis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 980px;
+            margin: 40px auto;
+            padding: 0 16px;
+            background: #f7f7f7;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form,
+        .demande-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 18px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            background: white;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .link-btn {
+            border: none;
+            background: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .secondary {
+            background: #2c3e50;
+        }
+
+        .danger {
+            background: #e74c3c;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 14px;
+        }
+
+        @media (max-width: 720px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Créer un devis</h2>
+
+    <div style="margin-bottom: 20px;">
+        <a class="link-btn secondary" th:href="@{/demande/liste}">Retour à la liste</a>
+    </div>
+
+    <form th:action="@{/devis/save}" method="post">
+        <div class="grid">
+            <div>
+                <label for="idDemande">Demande :</label>
+                <select id="idDemande" name="idDemande" onblur="chargerDemande()" onchange="chargerDemande()" required>
+                    <option value="">-- Choisir une demande --</option>
+                    <option th:each="demande : ${demandes}"
+                            th:value="${demande.id}"
+                            th:text="${demande.reference + ' - ' + (demande.client != null ? demande.client.nom : '')}">
+                    </option>
+                </select>
+            </div>
+
+            <div>
+                <label for="idType">Type devis :</label>
+                <select id="idType" name="idType" required>
+                    <option th:each="type : ${types}"
+                            th:value="${type.id}"
+                            th:text="${type.libelle}"
+                            th:selected="${type.id == 1}">
+                    </option>
+                </select>
+            </div>
+
+            <div style="grid-column: 1 / -1;">
+                <label for="observation">Observation :</label>
+                <textarea id="observation" name="observation" maxlength="50" rows="2"></textarea>
+            </div>
+        </div>
+
+        <div class="demande-info" id="demandeInfo" style="display: none; margin-top: 18px;">
+            <strong>Informations demande</strong>
+            <p>Référence : <span id="infoReference"></span></p>
+            <p>Client : <span id="infoClient"></span></p>
+            <p>Lieu : <span id="infoLieu"></span></p>
+            <p>Commune : <span id="infoCommune"></span></p>
+            <p>Statut : <span id="infoStatut"></span></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Montant</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="detailsBody">
+                <tr>
+                    <td><input type="text" name="libelle" maxlength="50" required></td>
+                    <td><input type="number" name="quantite" min="1" value="1" oninput="calculerMontants()" required></td>
+                    <td><input type="number" name="prixUnitaire" min="0" step="0.01" value="0" oninput="calculerMontants()" required></td>
+                    <td class="montant">0.00</td>
+                    <td><button type="button" class="danger" onclick="supprimerLigne(this)">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="total">Total : <span id="totalDevis">0.00</span></div>
+
+        <div class="actions">
+            <button type="button" class="secondary" onclick="ajouterLigne()">Ajouter une ligne</button>
+            <button type="submit">Enregistrer</button>
+        </div>
+    </form>
+
+    <script>
+        async function chargerDemande() {
+            const select = document.getElementById('idDemande');
+            const idDemande = select.value;
+            if (!idDemande) {
+                document.getElementById('demandeInfo').style.display = 'none';
+                document.getElementById('idType').value = '1';
+                return;
+            }
+
+            const response = await fetch('/devis/demande/' + idDemande);
+            if (!response.ok) {
+                return;
+            }
+
+            const demande = await response.json();
+            document.getElementById('infoReference').textContent = demande.reference;
+            document.getElementById('infoClient').textContent = demande.client;
+            document.getElementById('infoLieu').textContent = demande.lieu;
+            document.getElementById('infoCommune').textContent = demande.commune;
+            document.getElementById('infoStatut').textContent = demande.statutSigle + ' - ' + demande.statutLibelle;
+            document.getElementById('idType').value = demande.typeId;
+            document.getElementById('demandeInfo').style.display = 'block';
+        }
+
+        function ajouterLigne() {
+            const body = document.getElementById('detailsBody');
+            const row = body.rows[0].cloneNode(true);
+            row.querySelectorAll('input').forEach(input => {
+                input.value = input.name === 'quantite' ? '1' : input.name === 'prixUnitaire' ? '0' : '';
+            });
+            row.querySelector('.montant').textContent = '0.00';
+            body.appendChild(row);
+            calculerMontants();
+        }
+
+        function supprimerLigne(button) {
+            const body = document.getElementById('detailsBody');
+            if (body.rows.length > 1) {
+                button.closest('tr').remove();
+                calculerMontants();
+            }
+        }
+
+        function calculerMontants() {
+            let total = 0;
+            document.querySelectorAll('#detailsBody tr').forEach(row => {
+                const quantite = parseFloat(row.querySelector('[name="quantite"]').value) || 0;
+                const prixUnitaire = parseFloat(row.querySelector('[name="prixUnitaire"]').value) || 0;
+                const montant = quantite * prixUnitaire;
+                row.querySelector('.montant').textContent = montant.toFixed(2);
+                total += montant;
+            });
+            document.getElementById('totalDevis').textContent = total.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>

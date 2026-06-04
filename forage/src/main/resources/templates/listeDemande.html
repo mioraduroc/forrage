@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des demandes</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 16px;
+            background: #f7f7f7;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f2f2f2;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+        }
+
+        .edit {
+            background: #f39c12;
+        }
+
+        .delete {
+            background: #e74c3c;
+        }
+
+        .top-bar {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .add-btn {
+            background: #27ae60;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: white;
+        }
+
+        .DC { background: #3498db; }
+        .DEC { background: #9b59b6; }
+        .DEA { background: #2ecc71; }
+        .DFC { background: #f39c12; }
+        .DFA { background: #e74c3c; }
+        .NONE { background: gray; }
+    </style>
+</head>
+
+<body>
+
+<h2>Liste des demandes</h2>
+
+<div class="top-bar">
+    <a class="add-btn" th:href="@{/demande/formulaire}">
+        + Nouvelle demande
+    </a>
+    <a class="add-btn" th:href="@{/devis/formulaire}">
+        + Nouveau devis
+    </a>
+    <a class="add-btn" th:href="@{/demande/statut/formulaire}">
+        + Modifier statut
+    </a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Référence</th>
+            <th>Client</th>
+            <th>Lieu</th>
+            <th>Commune</th>
+            <th>Statut actuel</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="d : ${demandes}">
+
+            <td th:text="${d.id}"></td>
+            <td th:text="${d.reference}"></td>
+
+            <td th:text="${d.client != null ? d.client.nom : ''}"></td>
+            <td th:text="${d.lieu}"></td>
+            <td th:text="${d.commune != null ? d.commune.libelle : ''}"></td>
+
+            <td>
+                <span class="badge"
+                    th:classappend="${statuts.get(d.id)}"
+                    th:text="${statuts.get(d.id)}">
+                </span>
+            </td>
+
+            <td>
+                <a th:href="@{'/demande/edit/' + ${d.id}}"
+                   class="btn edit">
+                    Modifier
+                </a>
+
+                <a th:href="@{'/demande/delete/' + ${d.id}}"
+                   class="btn delete"
+                   onclick="return confirm('Voulez-vous supprimer cette demande ?')">
+                    Supprimer
+                </a>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -42,7 +42,7 @@
 
                 
 
-- CRUD pour demande
+- CRUD pour demande (que l'on puisse faire edit d'une demande et on ne peux pas modifier son statut mais uniquement la commune , le lieu , ou la personne )
 - ny ambiny insertion directe 
 
 
@@ -53,4 +53,4 @@
 
 ETAPE 
         - identification et caractéristique des entités
-        - traiter les caracterisy=tiques qui sont des entités
+        - traiter les caracteristiques qui sont des entités

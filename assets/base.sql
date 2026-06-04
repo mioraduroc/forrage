@@ -44,7 +44,8 @@ CREATE TABLE demande (
 
 CREATE TABLE statut (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    statut VARCHAR(20) UNIQUE
+    sigle VARCHAR(20) UNIQUE,
+    libelle VARCHAR(50) 
 );
 
 CREATE TABLE statutDemande (
@@ -57,3 +58,29 @@ CREATE TABLE statutDemande (
     FOREIGN KEY (idStatut) references statut(id)
 );
 
+
+CREATE TABLE type (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    libelle VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE devis (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idDemande INT NOT NULL,
+    idType INT NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    observation VARCHAR(50),
+
+    FOREIGN KEY (idDemande) REFERENCES demande(id),
+    FOREIGN KEY (idType) REFERENCES type(id)
+);
+
+CREATE TABLE detailDevis (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idDevis INT NOT NULL,
+    libelle VARCHAR(50) NOT NULL,
+    quantite INT NOT NULL,
+    prixUnitaire DECIMAL(10,2) NOT NULL,
+
+    FOREIGN KEY (idDevis) REFERENCES devis(id)
+);

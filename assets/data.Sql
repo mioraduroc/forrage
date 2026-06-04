@@ -23,15 +23,17 @@ INSERT INTO commune (libelle, idDistrict) VALUES
 ('Antsirabe Nord', 4),
 ('Toamasina Ville', 5);
 
-INSERT INTO statut (statut) VALUES
-('En attente'),
-('En cours'),
-('Validée'),
-('Refusée'),
-('Terminée');
+INSERT INTO statut (sigle,libelle) VALUES
+('DC','Demande Crée'),
+('DEC',"Devis d'étude crée"),
+('DEA',"Devis d'étude acceptée"),
+('DFC',"Devis de forage crée"),
+('DFA',"Devis de forage acceptée");
 
 
-
+INSERT INTO type (libelle) VALUES
+("Devis d'etude"),
+("Devis de forage");
 
 SELECT * FROM region;
 SELECT * FROM district;

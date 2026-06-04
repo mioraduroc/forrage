@@ -1,0 +1,56 @@
+-Statut
+    - rattache a demande
+    - demande cree , devies etude refuse , devis forrage sortie
+
+- devis
+    - id
+    - libelle ( transport tana _ morondava )
+    - quantite ( 2 =  aller retour)
+    - prix unitaire  ( 50 000 ar )
+
+
+    * javascript 
+        - onclick _ onblur
+        - maka info momba ilay demande en ajax 
+        - retour en Json
+
+
+
+- fromulaire devis 
+    - demande   ( ato ilay ajax )
+    - client
+    - date 
+    - lieu
+    - type 
+        - etude
+        - forrage
+
+
+        = > insertion devis
+        = > insertion demandeStatut
+    - montant ( javascript maivana )
+
+
+- table devis
+    - id    
+    - idDemande
+    - createdAt
+    - observation
+    - idType
+
+- table Type
+    - id
+    - libelle ( etude ou forrage )
+
+- table statut azo asiana hoe sigle ( DEC , DER , DFA )  de iny sigle iny comparer-na am constante na mapping 
+
+
+- table detail devis    ( calcul automatique )
+    - id
+    - libelle
+    - quantite
+    - montantUnitaire
+    - idDevis 
+
+
+    -ito table ito tsy historique fa tonga dia update rehefa misye vaovao ( mise a jour )
