@@ -38,7 +38,7 @@
 </head>
 <body>
 
-<h2>Créer une demande</h2>
+<h2 th:text="${demande.id != null and demande.id != 0} ? 'Modifier la demande' : 'Créer une demande'">Créer une demande</h2>
 
 <div style="margin-bottom: 20px;">
     <a th:href="@{/demande/liste}"
@@ -56,9 +56,12 @@
 
 <form th:action="@{/demande/save}" th:object="${demande}" method="post">
 
+    <input type="hidden" th:field="*{id}" />
+
     <div>
         <label for="reference">Référence :</label>
-        <input id="reference" type="text" th:field="*{reference}" maxlength="20" required>
+        <input id="reference" type="text" th:field="*{reference}" maxlength="20" required 
+               th:readonly="${demande.id != null and demande.id != 0}">
     </div>
 
     <div>
