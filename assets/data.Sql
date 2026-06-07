@@ -26,14 +26,29 @@ INSERT INTO commune (libelle, idDistrict) VALUES
 INSERT INTO statut (sigle,libelle) VALUES
 ('DC','Demande Crée'),
 ('DEC',"Devis d'étude crée"),
+('DER',"Devis d'étude refusé"),
 ('DEA',"Devis d'étude acceptée"),
 ('DFC',"Devis de forage crée"),
-('DFA',"Devis de forage acceptée");
+('DFR',"Devis forage refusé"),
+('DFA',"Devis de forage acceptée"),
+('TC',"Travail commencé"),
+('TT',"Travail terminé") ;
 
 
 INSERT INTO type (libelle) VALUES
 ("Devis d'etude"),
 ("Devis de forage");
+
+INSERT INTO
+    parametres (idStatut1, idStatut2, DT, alerte)
+VALUES
+    (1, 2, 160, 'Jaune'),
+    (1, 2, 180, 'Rouge'),
+    (2, 4, 100, 'Jaune'),
+    (4, 5, 80, 'Jaune'),
+    (4, 8, 160, 'Jaune'),
+    (4, 8, 190, 'Rouge');
+
 
 SELECT * FROM region;
 SELECT * FROM district;

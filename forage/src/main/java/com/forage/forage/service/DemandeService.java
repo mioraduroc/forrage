@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Comparator;
+import java.time.Duration;
+
 
 @Service
 public class DemandeService {
@@ -83,10 +86,23 @@ public class DemandeService {
         Statut statut = statutRepository.findBySigle("DC")
                 .orElseThrow(() -> new RuntimeException("Statut DC introuvable"));
 
+        StatutDemande st = statutDemandeService.getLastStatutDemandeByDemande_Id(saved.getId()) ;
+
+        BigDecimal dt = BigDecimal.ZERO;
+
+        if (st != null){
+
+            Duration duree = Duration.between(st.getDateStatut(),LocalDateTime.now());  
+            Long minutes = duree.toMinutes();
+            dt = BigDecimal.valueOf(minutes);
+        }
+        
+
         StatutDemande sd = new StatutDemande();
         sd.setDemande(saved);
         sd.setStatut(statut);
         sd.setDateStatut(LocalDateTime.now());
+        sd.setDt(dt); // duree en minute entre le nouveau statut et le dernier statut de la demande 
 
         statutDemandeService.save(sd);
 
@@ -110,10 +126,23 @@ public class DemandeService {
         Statut statut = statutRepository.findById(idStatut)
                 .orElseThrow(() -> new RuntimeException("Statut introuvable avec id: " + idStatut));
 
+        
+        StatutDemande st = statutDemandeService.getLastStatutDemandeByDemande_Id(idDemande) ;
+
+        BigDecimal dt = BigDecimal.ZERO;
+
+        if (st != null){
+
+            Duration duree = Duration.between(st.getDateStatut(),LocalDateTime.now());  
+            Long minutes = duree.toMinutes();
+            dt = BigDecimal.valueOf(minutes);
+        }
+
         StatutDemande sd = new StatutDemande();
         sd.setDemande(demande);
         sd.setStatut(statut);
         sd.setDateStatut(dateStatut != null ? dateStatut : LocalDateTime.now());
+        sd.setDt(dt);
 
         return statutDemandeService.save(sd);
     }

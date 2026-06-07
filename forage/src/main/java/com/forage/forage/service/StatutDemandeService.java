@@ -13,6 +13,20 @@ public class StatutDemandeService {
     @Autowired
     private StatutDemandeRepository statutDemandeRepository;
 
+    public StatutDemande getByIdDemande(int id){
+        StatutDemande st = statutDemandeRepository.findTopByDemande_IdOrderById(id);
+        return st;
+    }
+
+    public StatutDemande getLastStatutDemandeByDemande_Id(Integer idStatut){
+
+        StatutDemande st = statutDemandeRepository 
+            .findLastByStatut_IdOrderById(idStatut)
+            .orElse(null);
+            //.orElseThrow(() -> new RuntimeException("Aucun statut trouvé"));
+        return st;
+    }
+
     public StatutDemande save(StatutDemande sd) {
         return statutDemandeRepository.save(sd);
     }

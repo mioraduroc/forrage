@@ -53,10 +53,12 @@ CREATE TABLE statutDemande (
     idDemande INT NOT NULL ,
     idStatut INT NOT NULL,
     dateStatut DATETIME ,
+    dt DECIMAL(10, 2),
 
     FOREIGN KEY (idDemande) references demande(id) ,
     FOREIGN KEY (idStatut) references statut(id)
 );
+
 
 
 CREATE TABLE type (
@@ -83,4 +85,13 @@ CREATE TABLE detailDevis (
     prixUnitaire DECIMAL(10,2) NOT NULL,
 
     FOREIGN KEY (idDevis) REFERENCES devis(id)
+);
+
+
+CREATE TABLE parametres(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idStatut1 INT,
+    idStatut2 INT,
+    dt DECIMAL(10, 2),
+    alerte VARCHAR(20)
 );

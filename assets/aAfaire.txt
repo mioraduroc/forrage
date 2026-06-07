@@ -4,3 +4,81 @@
 
 
 -liste devis 
+- table statutDemande asiana colonne dt en mn 
+    - tsy raisina ny weekend 
+    - 8 h a 16 h ihany 
+
+
+-recalculer parametre rehefa avy nanova statut ana demande 
+
+- API 
+
+
+3969
+
+- alerte historique , alerte eo am liste demande
+
+
+par exemple si j'ai deux tables : 
+
+
+
+CREATE TABLE parametres(
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    idStatut1 INT,
+
+    idStatut2 INT,
+
+    dt DECIMAL(10, 2),
+
+    alerte VARCHAR(20)
+
+);
+
+
+
+et 
+
+CREATE TABLE statutDemande (
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    idDemande INT NOT NULL ,
+
+    idStatut INT NOT NULL,
+
+    dateStatut DATETIME ,
+
+    dt DECIMAL(10, 2),
+
+
+
+    FOREIGN KEY (idDemande) references demande(id) ,
+
+    FOREIGN KEY (idStatut) references statut(id)
+
+);
+
+
+
+
+
+
+
+
+
+je veoudrais relier chaque statuDemande avec l'alerte sui le correspont 
+
+
+- ao am modification statut atao hoe rehafa misafidy demande dia pre remplie amin'ny statut actuel sy date nanaovana an'ilay statut actuel ilay date 
+
+
+
+
+Modifie le formulaire de demnade pour qu'il y a une input date heure minute seconde 
+
+que l'on mettra dans statutDemande 
+C'est a dire que l'on ne va plus utiliser localDateTime  Now mais la date heure minutes secondes que l'on insere 
+- dans modification statut d'une damande  , je veux que lorsqu'on choisi une demande les champs sont pre remplis par son statut actuel et la date mais affiche aussi en bas du formulaire les historiques des statut s de cette demande avec les alerte correspondant  , n'oublie pas la mise a jour des calcul des dt dans statutDemande 

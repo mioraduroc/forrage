@@ -1,7 +1,9 @@
 package com.forage.forage.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,13 +30,18 @@ public class StatutDemande {
 
     private LocalDateTime dateStatut;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal dt;
+
+
     public StatutDemande() {
     }
 
-    public StatutDemande(Demande demande, Statut statut, LocalDateTime dateStatut) {
+    public StatutDemande(Demande demande, Statut statut, LocalDateTime dateStatut,BigDecimal dt) {
         this.demande = demande;
         this.statut = statut;
         this.dateStatut = dateStatut;
+        this.dt = dt ;
     }
 
     public Integer getId() {
@@ -69,6 +76,14 @@ public class StatutDemande {
         this.dateStatut = dateStatut;
     }
 
+    public BigDecimal getDt() {
+        return dt;
+    }
+
+    public void setDt(BigDecimal dt) {
+        this.dt = dt;
+    }
+
     @Override
     public String toString() {
         return "StatutDemande{" +
@@ -76,6 +91,7 @@ public class StatutDemande {
                 ", demande=" + (demande != null ? demande.getId() : null) +
                 ", statut=" + (statut != null ? statut.getLibelle() : null) +
                 ", date=" + dateStatut +
+                ", dt=" + dt +
                 '}';
     }
 }
