@@ -49,6 +49,9 @@
             color: white;
             font-size: 14px;
         }
+        .alerte {
+            background: #e74c3c;
+        }
 
         .edit {
             background: #f39c12;
@@ -137,7 +140,11 @@
             </td>
 
             <td>
-                <a th:href="@{'/demande/edit/' + ${d.id}}"
+                <a th:href="@{http://localhost/projetForage/liste_alertes.php(idDemande=${d.id})}"
+                 class="btn alerte">
+                    Alertes
+                </a>
+                <!-- <a th:href="@{'/demande/edit/' + ${d.id}}"
                    class="btn edit">
                     Modifier
                 </a>
@@ -146,7 +153,7 @@
                    class="btn delete"
                    onclick="return confirm('Voulez-vous supprimer cette demande ?')">
                     Supprimer
-                </a>
+                </a> -->
             </td>
 
         </tr>

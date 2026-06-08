@@ -1,5 +1,6 @@
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/ForageApplication.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/HelloController.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/controller/AlerteApiController.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/controller/AppErrorController.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/controller/DemandeController.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/controller/DetailDevisController.java
@@ -20,12 +21,15 @@
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/repository/DemandeRepository.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/repository/DetailDevisRepository.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/repository/DevisRepository.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/repository/ParametresRepository.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/repository/StatutDemandeRepository.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/repository/StatutRepository.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/repository/TypeRepository.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/service/AlerteService.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/service/ClientService.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/service/CommuneService.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/service/DemandeService.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/service/DetailDevisService.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/service/DevisService.java
+/home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/service/ParametreService.java
 /home/miora/Documents/4WebDyn/forrage_spring_mavc/forrage/forage/src/main/java/com/forage/forage/service/StatutDemandeService.java
