@@ -79,7 +79,7 @@ public class DemandeService {
         return demandeRepository.findAllWithStatuts();
     }
 
-    public Demande creerDemande(Demande demande) {
+    public Demande creerDemande(Demande demande, LocalDateTime dateCreation) {
 
         Demande saved = demandeRepository.save(demande);
 
@@ -92,7 +92,7 @@ public class DemandeService {
 
         if (st != null){
 
-            Duration duree = Duration.between(st.getDateStatut(),LocalDateTime.now());  
+            Duration duree = Duration.between(st.getDateStatut(),dateCreation);  
             Long minutes = duree.toMinutes();
             dt = BigDecimal.valueOf(minutes);
         }
@@ -101,7 +101,7 @@ public class DemandeService {
         StatutDemande sd = new StatutDemande();
         sd.setDemande(saved);
         sd.setStatut(statut);
-        sd.setDateStatut(LocalDateTime.now());
+        sd.setDateStatut(dateCreation);
         sd.setDt(dt); // duree en minute entre le nouveau statut et le dernier statut de la demande 
 
         statutDemandeService.save(sd);
@@ -127,13 +127,13 @@ public class DemandeService {
                 .orElseThrow(() -> new RuntimeException("Statut introuvable avec id: " + idStatut));
 
         
-        StatutDemande st = statutDemandeService.getLastStatutDemandeByDemande_Id(idDemande) ;
+        StatutDemande st = getDernierStatut(idDemande) ;
 
         BigDecimal dt = BigDecimal.ZERO;
 
         if (st != null){
 
-            Duration duree = Duration.between(st.getDateStatut(),LocalDateTime.now());  
+            Duration duree = Duration.between(st.getDateStatut(),dateStatut);  
             Long minutes = duree.toMinutes();
             dt = BigDecimal.valueOf(minutes);
         }
@@ -141,7 +141,7 @@ public class DemandeService {
         StatutDemande sd = new StatutDemande();
         sd.setDemande(demande);
         sd.setStatut(statut);
-        sd.setDateStatut(dateStatut != null ? dateStatut : LocalDateTime.now());
+        sd.setDateStatut(dateStatut);
         sd.setDt(dt);
 
         return statutDemandeService.save(sd);

@@ -52,11 +52,16 @@
        ">
         Voir la liste des demandes
     </a>
-</div>
+</div> 
 
 <form th:action="@{/demande/save}" th:object="${demande}" method="post">
 
     <input type="hidden" th:field="*{id}" />
+
+    <div>
+        <label for="dateCreation">Date et Heure de la demande :</label>
+        <input id="dateCreation" type="datetime-local" name="dateCreation" step="1" required>
+    </div>
 
     <div>
         <label for="reference">Référence :</label>

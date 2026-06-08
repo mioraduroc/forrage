@@ -30,15 +30,17 @@ public class DemandeController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Demande demande) {
+    public String save(
+            @ModelAttribute Demande demande, 
+            @RequestParam("dateCreation") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateCreation) {
         
-        // System.out.println(" AVANT SERVICE ");
-        // System.out.println(demande);
+        // Tu peux maintenant utiliser 'dateCreation' librement ici !
+        System.out.println("Date reçue du formulaire : " + dateCreation);
+        
+        // Exemple : Si tu as besoin de passer la date à ton service
+        demandeService.creerDemande(demande, dateCreation); 
 
-        demandeService.creerDemande(demande);
-    
         return "redirect:/demande/formulaire";
-        
     }
 
     @GetMapping("/delete/{id}")
@@ -96,9 +98,9 @@ public class DemandeController {
     public String saveStatut(
             @RequestParam("idDemande") int idDemande,   // ampiana nom an'ilay parametre 
             @RequestParam("idStatut") int idStatut,
-            @RequestParam("dateStatut") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateStatut) {
+            @RequestParam("dateCreation") LocalDateTime dateCreation) {
 
-        demandeService.ajouterStatut(idDemande, idStatut, dateStatut);
+        demandeService.ajouterStatut(idDemande, idStatut, dateCreation);
 
         return "redirect:/demande/liste";
     }

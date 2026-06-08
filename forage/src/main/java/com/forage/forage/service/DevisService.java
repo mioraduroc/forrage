@@ -47,12 +47,15 @@ public class DevisService {
     }
 
     @Transactional
-    public Devis creerDevis(int idDemande, int idType, String observation,
+    public Devis creerDevis( LocalDateTime dateCreation ,int idDemande, int idType, String observation,
             List<String> libelles, List<Integer> quantites, List<BigDecimal> prixUnitaires) {
+
         System.out.println("DevisService creerDevis ") ;
+        System.out.println("dateCreation : "+dateCreation);
         System.out.println("idDemande : "+idDemande);
         System.out.println("idType : "+idType);
         System.out.println("observation : "+observation);
+        
         for (String lbl : libelles) {
             System.out.println("libelles : "+lbl);
         }
@@ -72,7 +75,7 @@ public class DevisService {
         Devis devis = new Devis();
         devis.setDemande(demande);
         devis.setType(type);
-        devis.setCreatedAt(LocalDateTime.now());    // changer en date a inserer dans le formulaire
+        devis.setCreatedAt(dateCreation);    // changer en date a inserer dans le formulaire
         devis.setObservation(observation);
         Devis saved = devisRepository.save(devis);
 
@@ -102,12 +105,12 @@ public class DevisService {
             System.out.println("detail numero : "+(i+1)) ;
         }
 
-        ajouterStatutDevisCree(demande, idType);
+        ajouterStatutDevisCree(dateCreation,demande, idType);
 
         return saved;
     }
 
-    private void ajouterStatutDevisCree(Demande demande, int idType) {
+    private void ajouterStatutDevisCree(LocalDateTime dateCreation ,Demande demande, int idType) {
 
         System.out.println("            DEBUUUUUUUUUUUUUUUUUG DevisService ajouterStatutDevisCree  ") ;
         String sigle = idType == 2 ? "DFC" : "DEC";
@@ -128,7 +131,7 @@ public class DevisService {
 
         if (st != null){
 
-            Duration duree = Duration.between(st.getDateStatut(),LocalDateTime.now());  
+            Duration duree = Duration.between(st.getDateStatut(),dateCreation);  
             Long minutes = duree.toMinutes();
             dt = BigDecimal.valueOf(minutes);
         }
@@ -136,7 +139,7 @@ public class DevisService {
         StatutDemande sd = new StatutDemande();
         sd.setDemande(demande);
         sd.setStatut(statut);
-        sd.setDateStatut(LocalDateTime.now());
+        sd.setDateStatut(dateCreation);
         sd.setDt(dt);
 
         statutDemandeService.save(sd);

@@ -12,7 +12,6 @@ public interface StatutDemandeRepository extends JpaRepository<StatutDemande, In
 
     void deleteByDemande_Id(Integer idDemande);
 
-    Optional <StatutDemande> findLastByStatut_IdOrderById(Integer idStatut) ;
-
-    StatutDemande findTopByDemande_IdOrderById(Integer idDemande) ;
+    Optional<StatutDemande> findTopByDemande_IdOrderById(Integer idDemande) ;
+    
 }

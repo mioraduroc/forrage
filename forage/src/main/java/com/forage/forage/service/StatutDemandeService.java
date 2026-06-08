@@ -14,14 +14,18 @@ public class StatutDemandeService {
     private StatutDemandeRepository statutDemandeRepository;
 
     public StatutDemande getByIdDemande(int id){
-        StatutDemande st = statutDemandeRepository.findTopByDemande_IdOrderById(id);
+        StatutDemande st = statutDemandeRepository 
+            .findTopByDemande_IdOrderById(id)
+            .orElse(null);
+            //.orElseThrow(() -> new RuntimeException("Aucun statut trouvé"));
         return st;
     }
+
 
     public StatutDemande getLastStatutDemandeByDemande_Id(Integer idStatut){
 
         StatutDemande st = statutDemandeRepository 
-            .findLastByStatut_IdOrderById(idStatut)
+            .findTopByDemande_IdOrderById(idStatut)
             .orElse(null);
             //.orElseThrow(() -> new RuntimeException("Aucun statut trouvé"));
         return st;

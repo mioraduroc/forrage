@@ -9,6 +9,7 @@ import com.forage.forage.model.*;
 import com.forage.forage.service.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,7 @@ public class DevisController {
 
     @PostMapping("/save")
     public String save(
+            @RequestParam("dateCreation") LocalDateTime dateCreation,
             @RequestParam("idDemande") int idDemande,
             @RequestParam("idType") int idType,
             @RequestParam(value = "observation", required = false) String observation,
@@ -56,7 +58,7 @@ public class DevisController {
             @RequestParam("quantite") List<Integer> quantites,
             @RequestParam("prixUnitaire") List<BigDecimal> prixUnitaires) {
 
-        devisService.creerDevis(idDemande, idType, observation, libelles, quantites, prixUnitaires);
+        devisService.creerDevis(dateCreation ,idDemande, idType, observation, libelles, quantites, prixUnitaires);
 
         return "redirect:/demande/liste";
     }

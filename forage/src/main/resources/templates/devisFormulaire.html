@@ -114,6 +114,10 @@
     </div>
 
     <form th:action="@{/devis/save}" method="post">
+        <div>
+            <label for="dateCreation">Date et Heure de la demande :</label>
+            <input id="dateCreation" type="datetime-local" name="dateCreation" step="1" required>
+        </div>
         <div class="grid">
             <div>
                 <label for="idDemande">Demande :</label>
