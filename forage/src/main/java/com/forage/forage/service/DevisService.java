@@ -11,6 +11,8 @@ import com.forage.forage.repository.DetailDevisRepository;
 import com.forage.forage.repository.DevisRepository;
 import com.forage.forage.repository.StatutRepository;
 import com.forage.forage.repository.TypeRepository;
+import com.forage.forage.service.DemandeService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,9 @@ public class DevisService {
 
     @Autowired
     private StatutDemandeService statutDemandeService;
+
+    @Autowired
+    private DemandeService demandeService;
 
     public List<Type> listerTypes() {
         return typeRepository.findAll();
@@ -120,28 +125,28 @@ public class DevisService {
 
         System.out.println("            DEBUUUUUUUUUUUUUUUUUG statut  "+ statut.getId()+" "+ statut.getLibelle() ) ;
  
-        StatutDemande st = statutDemandeService.getLastStatutDemandeByDemande_Id(demande.getId()) ;
-        if(st == null){
-            st = statutDemandeService.getByIdDemande(demande.getId());
-        }
+        // StatutDemande st = statutDemandeService.getLastStatutDemandeByDemande_Id(demande.getId()) ;
+        // if(st == null){
+        //     st = statutDemandeService.getByIdDemande(demande.getId());
+        // }
 
-        System.out.println("            DEBUUUUUUUUUUUUUUUUUG st  "+ st.getDt() ) ; // ato 
+        // System.out.println("            DEBUUUUUUUUUUUUUUUUUG st  "+ st.getDt() ) ; // ato 
 
-        BigDecimal dt = BigDecimal.ZERO;
+        // BigDecimal dt = BigDecimal.ZERO;
 
-        if (st != null){
+        // if (st != null){
 
-            Duration duree = Duration.between(st.getDateStatut(),dateCreation);  
-            Long minutes = duree.toMinutes();
-            dt = BigDecimal.valueOf(minutes);
-        }
+        //     Duration duree = Duration.between(st.getDateStatut(),dateCreation);  
+        //     Long minutes = duree.toMinutes();
+        //     dt = BigDecimal.valueOf(minutes);
+        // }
 
-        StatutDemande sd = new StatutDemande();
-        sd.setDemande(demande);
-        sd.setStatut(statut);
-        sd.setDateStatut(dateCreation);
-        sd.setDt(dt);
+        // StatutDemande sd = new StatutDemande();
+        // sd.setDemande(demande);
+        // sd.setStatut(statut);
+        // sd.setDateStatut(dateCreation);
+        // sd.setDt(dt);
 
-        statutDemandeService.save(sd);
+        demandeService.ajouterStatut(demande.getId(),statut.getId(),dateCreation) ;;
     }
 }

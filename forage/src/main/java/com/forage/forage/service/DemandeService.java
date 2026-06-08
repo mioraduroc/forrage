@@ -86,25 +86,26 @@ public class DemandeService {
         Statut statut = statutRepository.findBySigle("DC")
                 .orElseThrow(() -> new RuntimeException("Statut DC introuvable"));
 
-        StatutDemande st = statutDemandeService.getLastStatutDemandeByDemande_Id(saved.getId()) ;
+        // StatutDemande st = statutDemandeService.getLastStatutDemandeByDemande_Id(saved.getId()) ;
 
-        BigDecimal dt = BigDecimal.ZERO;
+        // BigDecimal dt = BigDecimal.ZERO;
 
-        if (st != null){
+        // if (st != null){
 
-            Duration duree = Duration.between(st.getDateStatut(),dateCreation);  
-            Long minutes = duree.toMinutes();
-            dt = BigDecimal.valueOf(minutes);
-        }
+        //     Duration duree = Duration.between(st.getDateStatut(),dateCreation);  
+        //     Long minutes = duree.toMinutes();
+        //     dt = BigDecimal.valueOf(minutes);
+        // }
         
+        // StatutDemande sd = new StatutDemande();
+        // sd.setDemande(saved);
+        // sd.setStatut(statut);
+        // sd.setDateStatut(dateCreation);
+        // sd.setDt(dt); // duree en minute entre le nouveau statut et le dernier statut de la demande 
 
-        StatutDemande sd = new StatutDemande();
-        sd.setDemande(saved);
-        sd.setStatut(statut);
-        sd.setDateStatut(dateCreation);
-        sd.setDt(dt); // duree en minute entre le nouveau statut et le dernier statut de la demande 
+        // statutDemandeService.save(sd);
 
-        statutDemandeService.save(sd);
+        ajouterStatut(saved.getId(),statut.getId(),dateCreation) ;
 
         return saved;
     }
@@ -126,16 +127,14 @@ public class DemandeService {
         Statut statut = statutRepository.findById(idStatut)
                 .orElseThrow(() -> new RuntimeException("Statut introuvable avec id: " + idStatut));
 
-        
         StatutDemande st = getDernierStatut(idDemande) ;
 
         BigDecimal dt = BigDecimal.ZERO;
 
         if (st != null){
 
-            Duration duree = Duration.between(st.getDateStatut(),dateStatut);  
-            Long minutes = duree.toMinutes();
-            dt = BigDecimal.valueOf(minutes);
+            long minutesOuvrees = calculerMinutesOuvrables(st.getDateStatut(), dateStatut);
+            dt = BigDecimal.valueOf(minutesOuvrees);
         }
 
         StatutDemande sd = new StatutDemande();
@@ -145,5 +144,36 @@ public class DemandeService {
         sd.setDt(dt);
 
         return statutDemandeService.save(sd);
+    }
+
+    private long calculerMinutesOuvrables(LocalDateTime debut, LocalDateTime fin) {
+        if (debut == null || fin == null || debut.isAfter(fin)) {
+            return 0;
+        }
+
+        long minutesComptees = 0;
+        LocalDateTime curseur = debut;
+
+        //  bornes de travail
+        int heureOuverture = 8;
+        int heureFermeture = 16;
+
+        // Boucle minute par minute
+        while (curseur.isBefore(fin)) {
+            java.time.DayOfWeek jour = curseur.getDayOfWeek();
+            int heure = curseur.getHour();
+
+            if (jour != java.time.DayOfWeek.SATURDAY && jour != java.time.DayOfWeek.SUNDAY) {
+                
+                if (heure >= heureOuverture && heure < heureFermeture) {
+                    minutesComptees++;
+                }
+            }
+
+            // On passe à la minute suivante
+            curseur = curseur.plusMinutes(1);
+        }
+
+        return minutesComptees;
     }
 }
